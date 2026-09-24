@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing & Packages | Stackly Adventure Tourism</title>
+    <meta name="description" content="Transparent expedition pricing tiers, single thrill passes, weekend packages, and ultimate summit passes.">
+    <link rel="icon" type="image/webp" href="images/logoStackly.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column; background-color: var(--color-secondary); color: var(--color-text);">
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <img src="images/logoStackly.webp" alt="Stackly Logo" class="preloader-logo" style="height: 52px; margin-bottom: 1.5rem;">
+            <div class="preloader-bar-wrap">
+                <div class="preloader-bar" id="plBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logoStackly.webp" alt="Stackly Logo" class="logo-img" style="height: 42px;">
+            </a>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="adventures.html" class="nav-link">Adventures</a></li>
+                <li><a href="pricing.html" class="nav-link active">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="mobile-only-nav"><a href="login.html" class="nav-link" style="color: var(--color-primary-light); font-weight: 700;">Login</a></li>
+                <li class="mobile-only-nav" style="width: 100%; max-width: 220px; margin-top: 0.4rem;"><a href="signup.html" class="btn btn-primary" style="width: 100%; justify-content: center;">Get Started</a></li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="login.html" class="nav-link desktop-login-btn" style="color: var(--color-text-muted); font-weight: 600; text-decoration: none;">Login</a>
+                <a href="signup.html" class="btn btn-primary desktop-cta">
+                    <span>Get Started</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu">
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header style="background: linear-gradient(180deg, #1A0E0A 0%, #281711 100%); padding: 9rem 0 4rem; text-align: center;">
+        <div class="container">
+            <span class="subtitle">Transparent Rates</span>
+            <h1 class="title">Expedition Packages</h1>
+            <p class="description" style="max-width: 650px; margin: 0.5rem auto 0;">All-inclusive pricing with certified gear, medical safety cover, camp meals, and HD video footage included.</p>
+        </div>
+    </header>
+
+    <!-- PRICING TIERS GRID -->
+    <section class="section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 2rem; align-items: stretch;">
+
+                <!-- Tier 1 -->
+                <div class="glass-card" style="padding: 2.5rem 2rem; display: flex; flex-direction: column;">
+                    <div style="color: var(--color-primary-light); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Single Thrill</div>
+                    <h3 style="font-size: 1.8rem; color: #FFF; margin: 0.4rem 0 1rem;">Day Thrill Pass</h3>
+                    <div style="font-size: 3rem; font-weight: 900; color: #FFF; font-family: var(--font-heading); margin-bottom: 0.3rem;">
+                        $120 <span style="font-size: 1rem; color: var(--color-text-muted); font-weight: 400;">/ person</span>
+                    </div>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.8rem;">
+                        Perfect for quick weekend thrill-seekers wanting 1 major adventure activity.
+                    </p>
+
+                    <ul style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 2.2; margin-bottom: 2rem; list-style: none; padding: 0;">
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-primary-light);">✓</span> Choice of Rafting or Bungee</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-primary-light);">✓</span> Full Petzl Safety Gear</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-primary-light);">✓</span> UIAA/IRF Certified Guide</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-primary-light);">✓</span> HD GoPro Photo Pack</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem; opacity: 0.4;"><span style="color: #666;">✕</span> Overnight Camp Stay</li>
+                    </ul>
+
+                    <a href="404.html" class="btn btn-secondary" style="margin-top: auto; width: 100%; justify-content: center;">Choose Day Pass</a>
+                </div>
+
+                <!-- Tier 2 (Featured) -->
+                <div class="glass-card" style="padding: 2.5rem 2rem; display: flex; flex-direction: column; border: 2px solid var(--color-primary); position: relative; background: linear-gradient(180deg, rgba(227,83,54,0.15) 0%, rgba(18,12,10,0.8) 100%);">
+                    <div style="position: absolute; top: -14px; right: 20px; background: var(--color-primary); color: #FFF; font-size: 0.75rem; font-weight: 800; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">
+                        MOST POPULAR
+                    </div>
+                    <div style="color: var(--color-gold); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">2 Days / 1 Night</div>
+                    <h3 style="font-size: 1.8rem; color: #FFF; margin: 0.4rem 0 1rem;">Weekend Explorer</h3>
+                    <div style="font-size: 3rem; font-weight: 900; color: #FFF; font-family: var(--font-heading); margin-bottom: 0.3rem;">
+                        $350 <span style="font-size: 1rem; color: var(--color-text-muted); font-weight: 400;">/ person</span>
+                    </div>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.8rem;">
+                        Our complete signature adventure combo with rafting, camping, and trekking.
+                    </p>
+
+                    <ul style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 2.2; margin-bottom: 2rem; list-style: none; padding: 0;">
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-gold);">✓</span> Grade IV Rafting + Summit Trek</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-gold);">✓</span> Luxury Dome Tent Stay</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-gold);">✓</span> Campfire Barbecue Dinner & Breakfast</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-gold);">✓</span> 4K GoPro Video & Drone Pack</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-gold);">✓</span> Satellite Emergency Protection</li>
+                    </ul>
+
+                    <a href="404.html" class="btn btn-primary" style="margin-top: auto; width: 100%; justify-content: center;">Choose Explorer Pass</a>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="glass-card" style="padding: 2.5rem 2rem; display: flex; flex-direction: column;">
+                    <div style="color: var(--color-accent); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">4 Days All-Inclusive</div>
+                    <h3 style="font-size: 1.8rem; color: #FFF; margin: 0.4rem 0 1rem;">Ultimate Summit Pass</h3>
+                    <div style="font-size: 3rem; font-weight: 900; color: #FFF; font-family: var(--font-heading); margin-bottom: 0.3rem;">
+                        $690 <span style="font-size: 1rem; color: var(--color-text-muted); font-weight: 400;">/ person</span>
+                    </div>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.8rem;">
+                        The VIP wilderness experience featuring all 6 expeditions and dedicated guides.
+                    </p>
+
+                    <ul style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 2.2; margin-bottom: 2rem; list-style: none; padding: 0;">
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-accent);">✓</span> Full Access to All 6 Expeditions</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-accent);">✓</span> Dedicated 1:1 Senior UIAA Guide</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-accent);">✓</span> 3 Nights Luxury Camping & Lodge</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-accent);">✓</span> Private Helicopter Evac Cover</li>
+                        <li style="display: flex; align-items: center; gap: 0.6rem;"><span style="color: var(--color-accent);">✓</span> Personal Drone Cinematographer</li>
+                    </ul>
+
+                    <a href="404.html" class="btn btn-secondary" style="margin-top: auto; width: 100%; justify-content: center;">Reserve VIP Pass</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section" style="background: var(--color-secondary-light);">
+        <div class="container">
+            <div class="section-header">
+                <span class="subtitle">Questions Answered</span>
+                <h2 class="title">Frequently Asked Questions</h2>
+                <p class="description">Everything you need to know before booking your expedition.</p>
+            </div>
+
+            <div style="max-width: 800px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 1rem;">
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h4 style="color: #FFF; font-size: 1.1rem; margin-bottom: 0.5rem;">What is your weather cancellation policy?</h4>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6;">
+                        If extreme river swells or high mountain winds affect safety, your expedition is rescheduled at zero charge or converted into a 100% full refund voucher valid for 2 years.
+                    </p>
+                </div>
+
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h4 style="color: #FFF; font-size: 1.1rem; margin-bottom: 0.5rem;">Are safety gear and insurance included in the price?</h4>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6;">
+                        Yes! All Petzl climbing harnesses, NRS life jackets, helmets, and $50,000 emergency medical rescue insurance are fully included in every package price.
+                    </p>
+                </div>
+
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h4 style="color: #FFF; font-size: 1.1rem; margin-bottom: 0.5rem;">What fitness level is required?</h4>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6;">
+                        Day thrill passes and beach camping require moderate physical health. Summit trekking requires basic cardio stamina, and beginner options are available for all skill levels.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contact" style="margin-top: auto;">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html">
+                        <img src="images/logoStackly.webp" alt="Stackly Logo" class="logo-img" style="height: 42px; margin-bottom: 1.2rem;">
+                    </a>
+                    <p style="color: var(--color-text-muted); margin-bottom: 1.5rem; line-height: 1.7;">
+                        World-class adventure tourism experiences crafted for peak adrenaline, certified safety, and memory of a lifetime.
+                    </p>
+                    <div style="display: flex; gap: 0.8rem; align-items: center;">
+                        <a href="404.html" style="width: 38px; height: 38px; border-radius: 50%; background: rgba(245,245,220,0.08); display: flex; align-items: center; justify-content: center; color: #FFF;" title="Facebook">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="404.html" style="width: 38px; height: 38px; border-radius: 50%; background: rgba(245,245,220,0.08); display: flex; align-items: center; justify-content: center; color: #FFF;" title="Instagram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="404.html" style="width: 38px; height: 38px; border-radius: 50%; background: rgba(245,245,220,0.08); display: flex; align-items: center; justify-content: center; color: #FFF;" title="YouTube">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        </a>
+                        <a href="404.html" style="width: 38px; height: 38px; border-radius: 50%; background: rgba(245,245,220,0.08); display: flex; align-items: center; justify-content: center; color: #FFF;" title="X (Twitter)">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="color: #FFF; font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 1.2rem;">Quick Links</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 0.8rem; color: var(--color-text-muted);">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="adventures.html">Adventures</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 style="color: #FFF; font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 1.2rem;">Top Thrills</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 0.8rem; color: var(--color-text-muted);">
+                        <li><a href="404.html">Grade IV Rafting</a></li>
+                        <li><a href="404.html">83m Cliff Bungee</a></li>
+                        <li><a href="404.html">Peak Summit Trek</a></li>
+                        <li><a href="404.html">Granite Rock Ascent</a></li>
+                        <li><a href="404.html">Wild River Camping</a></li>
+                        <li><a href="404.html">Alpine Paragliding</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 style="color: #FFF; font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 1.2rem;">Expedition Concierge</h4>
+                    <p style="color: var(--color-text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+                        📍 Rishikesh Basecamp & Solang Valley Ops<br>
+                        📞 Concierge: +91 98765 43210<br>
+                        ✉️ Email: explore@stacklyadventure.com
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>© 2026 Stackly Adventure Tourism. All rights reserved.</div>
+                <div style="display: flex; gap: 1.5rem;">
+                    <a href="404.html">Privacy Policy</a>
+                    <a href="404.html">Safety Terms</a>
+                    <a href="404.html">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations — Stackly Adventure Tourism</title>
+    <meta name="description" content="Discover top adventure destinations for white water rafting, cliff bungee jumping, mountain trekking, and wild camping.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <img src="images/logoStackly.webp" alt="Stackly Logo" class="preloader-logo" style="height: 52px; margin-bottom: 1.5rem;">
+            <div class="preloader-bar-wrap">
+                <div class="preloader-bar" id="plBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logoStackly.webp" alt="Stackly Logo" class="logo-img" style="height: 42px;">
+            </a>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="adventures.html" class="nav-link">Adventures</a></li>
+                <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="mobile-only-nav"><a href="login.html" class="nav-link" style="color: var(--color-primary-light); font-weight: 700;">Login</a></li>
+                <li class="mobile-only-nav" style="width: 100%; max-width: 220px; margin-top: 0.4rem;"><a href="signup.html" class="btn btn-primary" style="width: 100%; justify-content: center;">Get Started</a></li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="login.html" class="nav-link desktop-login-btn" style="color: var(--color-text-muted); font-weight: 600; text-decoration: none;">Login</a>
+                <a href="signup.html" class="btn btn-primary desktop-cta">
+                    <span>Get Started</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu">
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header style="background: linear-gradient(180deg, #1A0E0A 0%, #281711 100%); padding: 9rem 0 4rem; text-align: center;">
+        <div class="container">
+            <span class="subtitle">Wild Frontiers</span>
+            <h1 class="title">Explore Destination Hubs</h1>
+            <p class="description" style="max-width: 600px; margin: 0.5rem auto 0;">Iconic adventure locations featuring river gorges, alpine crests, and remote wilderness camps.</p>
+        </div>
+    </header>
+
+    <!-- DESTINATIONS GRID -->
+    <section class="section">
+        <div class="container">
+            <div class="adventures-grid">
+                <div class="adv-card">
+                    <div class="adv-img-wrap">
+                        <img src="images/rafting.webp" alt="Rishikesh River Gorges" class="adv-img">
+                        <span class="adv-category-tag">River Basecamp</span>
+                    </div>
+                    <div class="adv-body">
+                        <h3 class="adv-title">Rishikesh River Gorges</h3>
+                        <p class="adv-desc">World-renowned Grade IV rafting rapids, cliff jumping platforms, and riverside camping grounds along the holy Ganges.</p>
+                        <a href="index.html#adventures" class="btn btn-primary" style="margin-top: 1rem;">View Expeditions</a>
+                    </div>
+                </div>
+
+                <div class="adv-card">
+                    <div class="adv-img-wrap">
+                        <img src="images/trekking.webp" alt="Solang Alpine Valley" class="adv-img">
+                        <span class="adv-category-tag">Summit Base</span>
+                    </div>
+                    <div class="adv-body">
+                        <h3 class="adv-title">Solang Alpine Valley</h3>
+                        <p class="adv-desc">Towering snow-capped peaks, granite rock climbing faces, and high-altitude trekking routes into the Himalayas.</p>
+                        <a href="index.html#adventures" class="btn btn-primary" style="margin-top: 1rem;">View Expeditions</a>
+                    </div>
+                </div>
+
+                <div class="adv-card">
+                    <div class="adv-img-wrap">
+                        <img src="images/bungee.webp" alt="Mohan Chatti Canyon" class="adv-img">
+                        <span class="adv-category-tag">Freefall Zone</span>
+                    </div>
+                    <div class="adv-body">
+                        <h3 class="adv-title">Mohan Chatti Canyon</h3>
+                        <p class="adv-desc">Home to India's highest fixed bungee jumping platform suspended 83 meters over a rocky mountain valley.</p>
+                        <a href="index.html#adventures" class="btn btn-primary" style="margin-top: 1rem;">View Expeditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <div>© 2026 Stackly Adventure Tourism. All rights reserved.</div>
+                <div style="display: flex; gap: 1.5rem;">
+                    <a href="index.html">Home</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

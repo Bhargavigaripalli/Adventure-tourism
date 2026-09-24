@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started | Stackly Adventure Tourism</title>
+    <meta name="description" content="Create your Stackly Club account to unlock priority expedition bookings and member discounts.">
+    <link rel="icon" type="image/webp" href="images/logoStackly.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .password-toggle-icon {
+            user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .password-toggle-icon:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: var(--color-secondary); color: var(--color-text); padding: 2rem 1rem;">
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <img src="images/logoStackly.webp" alt="Stackly Logo" class="preloader-logo" style="height: 52px; margin-bottom: 1.5rem;">
+            <div class="preloader-bar-wrap">
+                <div class="preloader-bar" id="plBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP CONTAINER -->
+    <main style="width: 100%; max-width: 920px;">
+        <div style="margin-bottom: 1.2rem; text-align: left;">
+            <a href="index.html" style="color: var(--color-primary-light); font-size: 0.9rem; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;">
+                ← Back to Home
+            </a>
+        </div>
+
+        <div style="width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 2rem; align-items: stretch;" class="glass-card">
+            
+            <!-- Left Form Side -->
+            <div style="padding: 2.5rem;">
+                <div style="text-align: left; margin-bottom: 1.8rem;">
+                    <a href="index.html">
+                        <img src="images/logoStackly.webp" alt="Stackly Logo" class="logo-img" style="height: 38px; margin-bottom: 1rem;">
+                    </a>
+                    <h2 style="font-family: var(--font-heading); font-size: 1.8rem; color: #FFF; margin-bottom: 0.4rem;">Join The Expedition Club</h2>
+                    <p style="color: var(--color-text-muted); font-size: 0.88rem;">Unlock priority passes, guide telemetry, and 15% off your first expedition.</p>
+                </div>
+
+                <form id="signupForm" style="display: flex; flex-direction: column; gap: 1.1rem;">
+                    <!-- FULL NAME FIELD (Alphabets only, max 16, no spaces) -->
+                    <div>
+                        <label style="display: block; color: var(--color-text-muted); font-size: 0.82rem; margin-bottom: 0.4rem; font-weight: 700;">FULL NAME *</label>
+                        <input type="text" id="signupName" name="name" required placeholder="Bhargavi" maxlength="16" pattern="[A-Za-z]{1,16}" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '').slice(0, 16);" title="Alphabets only, no spaces, maximum 16 characters" style="width: 100%; padding: 0.8rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(227,83,54,0.3); border-radius: 8px; color: #FFF; font-size: 0.95rem; outline: none;">
+                    </div>
+
+                    <!-- EMAIL FIELD -->
+                    <div>
+                        <label style="display: block; color: var(--color-text-muted); font-size: 0.82rem; margin-bottom: 0.4rem; font-weight: 700;">EMAIL ADDRESS *</label>
+                        <input type="email" id="signupEmail" name="email" required placeholder="adventurer@example.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Must be a valid email address format (e.g. user@example.com)" style="width: 100%; padding: 0.8rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(227,83,54,0.3); border-radius: 8px; color: #FFF; font-size: 0.95rem; outline: none;">
+                    </div>
+
+                    <!-- CREATE PASSWORD FIELD WITH EYE MASK -->
+                    <div>
+                        <label style="display: block; color: var(--color-text-muted); font-size: 0.82rem; margin-bottom: 0.4rem; font-weight: 700;">CREATE PASSWORD *</label>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" id="signupPassword" name="password" required placeholder="••••••••••••" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}" title="Min 8 chars, 1 uppercase, 1 lowercase, 1 digit, and 1 special char (@$!%*?&#)." style="width: 100%; padding: 0.8rem 2.8rem 0.8rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(227,83,54,0.3); border-radius: 8px; color: #FFF; font-size: 0.95rem; outline: none;">
+                            <button type="button" id="toggleSignupPassword" title="Toggle password visibility" class="password-toggle-icon" style="position: absolute; right: 0.8rem; background: none; border: none; color: var(--color-primary-light); font-size: 1.1rem; padding: 0.2rem; outline: none;">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CONFIRM PASSWORD FIELD WITH EYE MASK -->
+                    <div>
+                        <label style="display: block; color: var(--color-text-muted); font-size: 0.82rem; margin-bottom: 0.4rem; font-weight: 700;">CONFIRM PASSWORD *</label>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" id="signupConfirmPassword" name="confirmPassword" required placeholder="••••••••••••" style="width: 100%; padding: 0.8rem 2.8rem 0.8rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(227,83,54,0.3); border-radius: 8px; color: #FFF; font-size: 0.95rem; outline: none;">
+                            <button type="button" id="toggleSignupConfirmPassword" title="Toggle password visibility" class="password-toggle-icon" style="position: absolute; right: 0.8rem; background: none; border: none; color: var(--color-primary-light); font-size: 1.1rem; padding: 0.2rem; outline: none;">
+                                👁️
+                            </button>
+                        </div>
+                        <div style="font-size: 0.72rem; color: var(--color-text-muted); margin-top: 0.4rem; line-height: 1.4;">
+                            🔒 Strong Password: Min 8 chars, 1 uppercase (A-Z), 1 lowercase (a-z), 1 digit (0-9), 1 special char (@$!%*?&#).
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem; margin-top: 0.4rem;">
+                        <span>Create Adventurer Account</span>
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--color-text-muted);">
+                    Already a member? <a href="login.html" style="color: var(--color-primary-light); font-weight: 600; text-decoration: none;">Log In Here</a>
+                </div>
+            </div>
+
+            <!-- Right Visual Banner Side -->
+            <div style="height: 100%; min-height: 480px; background: url('images/hero.webp') center/cover no-repeat; border-radius: 0 16px 16px 0; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem;">
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(10,5,3,0.88) 100%); border-radius: 0 16px 16px 0;"></div>
+                <div style="position: relative; z-index: 2;">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: #FFF; font-family: var(--font-heading); margin-bottom: 0.4rem;">"The Wild Calling."</div>
+                    <p style="font-size: 0.88rem; color: var(--color-primary-light); line-height: 1.5;">Join 15,000+ certified thrill seekers worldwide.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        const signupName = document.getElementById('signupName');
+        const signupEmail = document.getElementById('signupEmail');
+        const signupPassword = document.getElementById('signupPassword');
+        const signupConfirmPassword = document.getElementById('signupConfirmPassword');
+        const toggleSignupPassword = document.getElementById('toggleSignupPassword');
+        const toggleSignupConfirmPassword = document.getElementById('toggleSignupConfirmPassword');
+
+        // Toggle Password Eye Mask
+        toggleSignupPassword?.addEventListener('click', () => {
+            const isPassword = signupPassword.type === 'password';
+            signupPassword.type = isPassword ? 'text' : 'password';
+            toggleSignupPassword.textContent = isPassword ? '🙈' : '👁️';
+        });
+
+        // Toggle Confirm Password Eye Mask
+        toggleSignupConfirmPassword?.addEventListener('click', () => {
+            const isPassword = signupConfirmPassword.type === 'password';
+            signupConfirmPassword.type = isPassword ? 'text' : 'password';
+            toggleSignupConfirmPassword.textContent = isPassword ? '🙈' : '👁️';
+        });
+
+        // Form Submit Handler
+        document.getElementById('signupForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = signupName.value.trim();
+            const email = signupEmail.value.trim();
+            const password = signupPassword.value;
+            const confirmPassword = signupConfirmPassword.value;
+
+            // 1. Validate Name (Alphabets only, max 16, no spaces)
+            if (!/^[A-Za-z]{1,16}$/.test(name)) {
+                alert('Name must contain only alphabets (no spaces), up to 16 characters max.');
+                return;
+            }
+
+            // 2. Validate Email Format
+            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                alert('Please enter a valid email address format (e.g. user@example.com).');
+                return;
+            }
+
+            // 3. Validate Strong Password Requirement
+            const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+            if (!strongPasswordRegex.test(password)) {
+                alert('Strong Password Required!\n\nYour password must contain:\n• At least 8 characters\n• At least 1 uppercase letter (A-Z)\n• At least 1 lowercase letter (a-z)\n• At least 1 number (0-9)\n• At least 1 special character (@$!%*?&#)');
+                return;
+            }
+
+            // 4. Validate Both Passwords Match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match! Please verify your Create Password and Confirm Password fields.');
+                return;
+            }
+
+            alert('✨ Adventurer Account Created Successfully! Redirecting to login page...');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

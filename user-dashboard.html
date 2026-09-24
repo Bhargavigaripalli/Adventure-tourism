@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventurer Portal | Stackly Adventure Tourism</title>
+    <meta name="description" content="Real-time expedition telemetry, active bookings, safety clearance, and wilderness metrics.">
+    <link rel="icon" type="image/webp" href="images/logoStackly.webp">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Tailwind CDN & Console Warning Suppression -->
+    <script>
+        // Suppress Tailwind CDN production warning in browser console
+        const origWarn = console.warn;
+        console.warn = function(...args) {
+            if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+            origWarn.apply(console, args);
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sienna: '#E35336',
+                        'sienna-light': '#FF6F52',
+                        'sienna-dark': '#C23B22',
+                        gold: '#F4A460',
+                        cream: '#F5F5DC',
+                        'dark-bg': '#1A0E0A',
+                        'dark-card': '#24140F',
+                        'dark-border': 'rgba(245, 245, 220, 0.12)'
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #1A0E0A;
+            color: #F5F5DC;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.85rem 1.2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #D3C5B4;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .sidebar-item:hover {
+            color: #FFFFFF;
+            background: rgba(227, 83, 54, 0.15);
+        }
+        .sidebar-item.active {
+            background-color: #E35336;
+            color: #FFFFFF;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(227, 83, 54, 0.35);
+        }
+        .dashboard-card {
+            background-color: #24140F;
+            border: 1px solid rgba(245, 245, 220, 0.12);
+            border-radius: 1.25rem;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active-tab {
+            display: block;
+        }
+        #dashSidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        #dashSidebar::-webkit-scrollbar-track {
+            background: rgba(245, 245, 220, 0.05);
+        }
+        #dashSidebar::-webkit-scrollbar-thumb {
+            background: #E35336;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-[#1A0E0A] text-[#F5F5DC] antialiased min-h-screen flex flex-col md:flex-row relative">
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <img src="images/logoStackly.webp" alt="Stackly Logo" class="preloader-logo" style="height: 52px; margin-bottom: 1.5rem;">
+            <div class="preloader-bar-wrap">
+                <div class="preloader-bar" id="plBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE TOP BAR HEADER -->
+    <header class="md:hidden flex items-center justify-between px-4 py-3 bg-[#140A07] border-b border-[rgba(245,245,220,0.1)] fixed top-0 left-0 right-0 z-40 w-full shrink-0">
+        <a href="index.html" class="flex items-center gap-2">
+            <img src="images/logoStackly.webp" alt="Stackly Logo" class="h-9">
+        </a>
+        <button id="dashMobileToggle" class="p-2 text-[#F5F5DC] focus:outline-none text-xl" aria-label="Toggle Navigation Drawer">
+            <i class="fa-solid fa-bars" id="dashToggleIcon"></i>
+        </button>
+    </header>
+
+    <!-- MOBILE BACKDROP OVERLAY -->
+    <div id="dashSidebarOverlay" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 hidden md:hidden"></div>
+
+    <!-- LEFT SIDEBAR NAVIGATION DRAWER -->
+    <aside id="dashSidebar" class="w-64 bg-[#140A07] border-r border-[rgba(245,245,220,0.1)] flex flex-col justify-between p-6 min-h-screen max-h-screen overflow-y-auto shrink-0 fixed inset-y-0 left-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:flex">
+        <div>
+            <!-- Stackly Logo Header -->
+            <a href="index.html" class="flex items-center gap-3 mb-8 text-decoration-none">
+                <img src="images/logoStackly.webp" alt="Stackly Logo" class="h-10">
+            </a>
+
+            <!-- Profile Badge -->
+            <div class="bg-[#24140F] border border-[rgba(245,245,220,0.15)] rounded-2xl p-3.5 mb-8 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#E35336] text-white font-extrabold flex items-center justify-center text-sm shrink-0">
+                    BG
+                </div>
+                <div class="overflow-hidden">
+                    <div class="font-bold text-sm text-white truncate">Bhargavi Garipalli</div>
+                    <div class="text-[10px] font-bold text-[#F4A460] tracking-wider uppercase truncate">ADVENTURER CLUB MEMBER</div>
+                </div>
+            </div>
+
+            <!-- Navigation Links (Interactive Tabs) -->
+            <nav class="space-y-2">
+                <button class="sidebar-item active w-full text-left" data-tab="tab-overview">
+                    <i class="fa-solid fa-gauge-high text-base"></i>
+                    <span>Overview</span>
+                </button>
+                <button class="sidebar-item w-full text-left" data-tab="tab-expeditions">
+                    <i class="fa-solid fa-compass text-base"></i>
+                    <span>My Expeditions</span>
+                </button>
+                <button class="sidebar-item w-full text-left" data-tab="tab-quiz">
+                    <i class="fa-solid fa-sliders text-base"></i>
+                    <span>Quiz & Matcher</span>
+                </button>
+                <button class="sidebar-item w-full text-left" data-tab="tab-weather">
+                    <i class="fa-solid fa-chart-line text-base"></i>
+                    <span>Trail Weather</span>
+                </button>
+                <button class="sidebar-item w-full text-left" data-tab="tab-permits">
+                    <i class="fa-solid fa-shield-halved text-base"></i>
+                    <span>Permits & Safety</span>
+                </button>
+                <button class="sidebar-item w-full text-left" data-tab="tab-concierge">
+                    <i class="fa-solid fa-headset text-base"></i>
+                    <span>Basecamp Concierge</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Sign Out Button -->
+        <div>
+            <a href="login.html" class="flex items-center gap-3 text-[#D3C5B4] hover:text-white text-sm font-semibold px-4 py-3 rounded-xl transition text-decoration-none">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col min-w-0 bg-[#1A0E0A] min-h-screen pt-16 md:pt-0">
+        
+        <!-- TOP HEADER BAR -->
+        <header class="p-6 pb-4 border-b border-[rgba(245,245,220,0.1)] flex flex-wrap items-center justify-between gap-4">
+            <div>
+                <h1 class="text-2xl lg:text-3xl font-extrabold text-white tracking-tight font-heading" id="headerTabTitle">Adventurer Portal</h1>
+                <p class="text-[#D3C5B4] text-xs lg:text-sm mt-0.5" id="headerTabSubtitle">Real-time expedition telemetry & wilderness safety metrics</p>
+            </div>
+
+            <!-- Header Right Status Pills & CTA -->
+            <div class="flex items-center flex-wrap gap-3">
+                <div class="bg-[#24140F] border border-[rgba(245,245,220,0.15)] text-xs font-semibold px-3.5 py-2 rounded-full flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#FF6F52] animate-pulse"></span>
+                    <span class="text-[#D3C5B4]">RIVER FLOW</span>
+                    <span class="text-[#FF6F52] font-bold">+0.64% (Grade IV)</span>
+                </div>
+
+                <div class="bg-[#24140F] border border-[rgba(245,245,220,0.15)] text-xs font-semibold px-3.5 py-2 rounded-full text-[#D3C5B4]">
+                    WEATHER <span class="text-[#F4A460] font-bold">24°C CLEAR</span>
+                </div>
+
+                <a href="404.html" class="bg-[#E35336] hover:bg-[#C23B22] text-white font-extrabold text-xs px-4 py-2.5 rounded-full flex items-center gap-1.5 transition text-decoration-none shadow-[0_0_20px_rgba(227,83,54,0.4)]">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span>Book Expedition</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- DASHBOARD BODY CONTAINER (TAB SECTIONS) -->
+        <main class="p-6 lg:p-8 space-y-6 flex-1 overflow-y-auto">
+
+            <!-- TAB 1: OVERVIEW -->
+            <div id="tab-overview" class="tab-content active-tab space-y-6">
+                <!-- WELCOME BANNER CARD -->
+                <div class="dashboard-card p-6 lg:p-8 relative overflow-hidden bg-gradient-to-r from-[#24140F] via-[#331B13] to-[#24140F] border border-[#E35336]/40">
+                    <div class="flex flex-wrap items-center justify-between gap-6 relative z-10">
+                        <div class="space-y-3 max-w-2xl">
+                            <div class="inline-block bg-[#E35336]/20 border border-[#E35336]/40 text-[#FF6F52] text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                                100% CERTIFIED ADVENTURER MEMBER
+                            </div>
+                            <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight font-heading">
+                                Welcome back, <span class="text-[#FF6F52]">Bhargavi</span>
+                            </h2>
+                            <p class="text-[#D3C5B4] text-sm lg:text-base leading-relaxed">
+                                Your expedition telemetry is tracking <span class="text-[#F4A460] font-bold">3 active bookings</span> and <span class="text-white font-bold">100% verified safety clearance</span> this season.
+                            </p>
+                        </div>
+
+                        <!-- Right Action Buttons -->
+                        <div class="flex items-center gap-3">
+                            <a href="404.html" class="bg-[#1A0E0A]/80 hover:bg-[#1A0E0A] border border-[rgba(245,245,220,0.2)] text-white font-bold text-xs px-4 py-3 rounded-xl flex items-center gap-2 transition text-decoration-none">
+                                <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                                <span>Reschedule Trip</span>
+                            </a>
+                            <a href="404.html" class="bg-[#E35336] hover:bg-[#C23B22] text-white font-extrabold text-xs px-4 py-3 rounded-xl flex items-center gap-2 transition text-decoration-none shadow-[0_0_15px_rgba(227,83,54,0.3)]">
+                                <i class="fa-solid fa-file-invoice text-xs"></i>
+                                <span>Download Permits</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 METRIC STAT CARDS ROW -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="dashboard-card p-5 space-y-3 border-t-2 border-t-[#E35336]">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-[#D3C5B4] uppercase tracking-wider">Total Expedition Value</span>
+                            <div class="w-8 h-8 rounded-lg bg-[#E35336]/20 text-[#FF6F52] flex items-center justify-center text-xs font-bold">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl lg:text-3xl font-black text-white font-heading">$1,850.00</div>
+                        <div class="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            <span>+$350 (+18.4% YTD)</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card p-5 space-y-3 border-t-2 border-t-[#F4A460]">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-[#D3C5B4] uppercase tracking-wider">Next Launch Slot</span>
+                            <div class="w-8 h-8 rounded-lg bg-[#F4A460]/20 text-[#F4A460] flex items-center justify-center text-xs font-bold">
+                                <i class="fa-solid fa-compass"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl lg:text-3xl font-black text-[#F4A460] font-heading">$350.00</div>
+                        <div class="text-xs font-semibold text-[#D3C5B4]">
+                            Next launch: <span class="text-white font-bold">Oct 12, 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card p-5 space-y-3 border-t-2 border-t-[#FF6F52]">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-[#D3C5B4] uppercase tracking-wider">Earned Adventure XP</span>
+                            <div class="w-8 h-8 rounded-lg bg-[#FF6F52]/20 text-[#FF6F52] flex items-center justify-center text-xs font-bold">
+                                <i class="fa-solid fa-shield-heart"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl lg:text-3xl font-black text-[#FF6F52] font-heading">2,450 XP</div>
+                        <div class="text-xs font-semibold text-[#D3C5B4]">
+                            Level 4 Explorer Status
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card p-5 space-y-3 border-t-2 border-t-emerald-400">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-[#D3C5B4] uppercase tracking-wider">Safety Clear Score</span>
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl lg:text-3xl font-black text-white font-heading">100% Safe</div>
+                        <div class="text-xs font-bold text-[#F4A460]">
+                            Profile: <span class="text-gray-300">Alpine & Rapid Certified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-8 dashboard-card p-6 space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-lg font-extrabold text-white font-heading">Expedition Growth Telemetry</h3>
+                                <p class="text-xs text-[#D3C5B4]">Historical performance vs basecamp safety standards & altitude logs</p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] p-1 rounded-xl text-xs font-bold">
+                                <button class="px-3 py-1 text-[#D3C5B4]">1M</button>
+                                <button class="px-3 py-1 text-[#D3C5B4]">6M</button>
+                                <button class="px-3 py-1 bg-[#E35336] text-white rounded-lg font-extrabold">1Y</button>
+                                <button class="px-3 py-1 text-[#D3C5B4]">ALL</button>
+                            </div>
+                        </div>
+                        <div class="h-64 w-full relative pt-4">
+                            <svg class="w-full h-full overflow-visible" viewBox="0 0 500 160" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="siennaGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#E35336" stop-opacity="0.45"/>
+                                        <stop offset="100%" stop-color="#E35336" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 0 140 Q 120 130, 240 100 T 480 30 L 480 160 L 0 160 Z" fill="url(#siennaGradient)" />
+                                <path d="M 0 140 Q 120 130, 240 100 T 480 30" fill="none" stroke="#E35336" stroke-width="3.5" stroke-linecap="round" />
+                                <circle cx="120" cy="130" r="4.5" fill="#F5F5DC" stroke="#E35336" stroke-width="2" />
+                                <circle cx="240" cy="100" r="4.5" fill="#F5F5DC" stroke="#E35336" stroke-width="2" />
+                                <circle cx="360" cy="70" r="4.5" fill="#F5F5DC" stroke="#E35336" stroke-width="2" />
+                                <circle cx="480" cy="30" r="6" fill="#FF6F52" stroke="#FFFFFF" stroke-width="2" />
+                            </svg>
+                            <div class="flex justify-between text-[11px] font-bold text-[#D3C5B4] mt-2">
+                                <span>JAN</span><span>MAR</span><span>JUN</span><span>SEP</span><span>DEC</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 dashboard-card p-6 space-y-4 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-extrabold text-white font-heading">Activity Allocation</h3>
+                            <p class="text-xs text-[#D3C5B4]">Current wilderness activity weight distribution</p>
+                        </div>
+                        <div class="relative w-44 h-44 mx-auto flex items-center justify-center my-4">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                <path class="text-[rgba(245,245,220,0.1)]" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="text-[#E35336]" stroke-dasharray="62, 100" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                <span class="text-2xl font-black text-white font-heading">62%</span>
+                                <span class="text-[10px] font-extrabold text-[#FF6F52] tracking-wider uppercase">RAFTING & WATER</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-xs font-semibold">
+                            <div class="flex justify-between items-center text-gray-300">
+                                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#E35336]"></span> White Water Rafting</span>
+                                <span class="font-bold text-white">62%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-gray-300">
+                                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#F4A460]"></span> Summit Trekking</span>
+                                <span class="font-bold text-white">24%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-gray-300">
+                                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Cliff Bungee Jumps</span>
+                                <span class="font-bold text-white">14%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: MY EXPEDITIONS -->
+            <div id="tab-expeditions" class="tab-content space-y-6">
+                <div class="dashboard-card p-6">
+                    <h2 class="text-2xl font-extrabold text-white font-heading mb-2">My Active & Past Expeditions</h2>
+                    <p class="text-sm text-[#D3C5B4] mb-6">Manage confirmed passes, guide contacts, and GoPro video vaults.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <span class="bg-[#E35336]/20 text-[#FF6F52] text-xs font-bold px-3 py-1 rounded-full">CONFIRMED PASS</span>
+                                <h4 class="text-lg font-bold text-white mt-2">🌊 Grade IV White Water Rafting</h4>
+                                <p class="text-xs text-[#D3C5B4]">Rishikesh River Basecamp • Oct 12, 2026 • Guide: Marshal Vikram R.</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <a href="404.html" class="bg-[#E35336] text-white text-xs font-bold px-4 py-2 rounded-lg">Download Pass 📄</a>
+                                <a href="404.html" class="bg-[#24140F] border border-[rgba(245,245,220,0.2)] text-white text-xs font-bold px-4 py-2 rounded-lg">GoPro Clips 🎥</a>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <span class="bg-[#F4A460]/20 text-[#F4A460] text-xs font-bold px-3 py-1 rounded-full">UPCOMING</span>
+                                <h4 class="text-lg font-bold text-white mt-2">🏔️ Summit Peak Alpine Trek</h4>
+                                <p class="text-xs text-[#D3C5B4]">Solang Valley Ops • Nov 05, 2026 • Guide: Guide Master C.</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <a href="404.html" class="bg-[#E35336] text-white text-xs font-bold px-4 py-2 rounded-lg">Gear Checklist 🎒</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: QUIZ & MATCHER -->
+            <div id="tab-quiz" class="tab-content space-y-6">
+                <div class="dashboard-card p-6">
+                    <h2 class="text-2xl font-extrabold text-white font-heading mb-2">Wilderness Terrain Quiz & Expedition Matcher</h2>
+                    <p class="text-sm text-[#D3C5B4] mb-6">Discover your ideal adventure based on adrenaline preference, group size, and skill level.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[#E35336]/30 text-center space-y-3">
+                            <div class="text-3xl">🌊</div>
+                            <h4 class="font-bold text-white">White Water Hydro Match</h4>
+                            <p class="text-xs text-[#D3C5B4]">98% Match for Team Thrill & Water Rapids</p>
+                            <a href="404.html" class="inline-block bg-[#E35336] text-white text-xs font-bold px-4 py-2 rounded-lg w-full">Launch Matcher</a>
+                        </div>
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[#F4A460]/30 text-center space-y-3">
+                            <div class="text-3xl">🪂</div>
+                            <h4 class="font-bold text-white">83m Aerial Bungee Match</h4>
+                            <p class="text-xs text-[#D3C5B4]">94% Match for Peak Solo Adrenaline</p>
+                            <a href="404.html" class="inline-block bg-[#F4A460] text-black font-extrabold text-xs px-4 py-2 rounded-lg w-full">Launch Matcher</a>
+                        </div>
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-emerald-400/30 text-center space-y-3">
+                            <div class="text-3xl">🏕️</div>
+                            <h4 class="font-bold text-white">High Alpine Summit Match</h4>
+                            <p class="text-xs text-[#D3C5B4]">91% Match for Endurance & Camping</p>
+                            <a href="404.html" class="inline-block bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-lg w-full">Launch Matcher</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: TRAIL WEATHER -->
+            <div id="tab-weather" class="tab-content space-y-6">
+                <div class="dashboard-card p-6">
+                    <h2 class="text-2xl font-extrabold text-white font-heading mb-2">Live Basecamp Weather & Hydro Telemetry</h2>
+                    <p class="text-sm text-[#D3C5B4] mb-6">Real-time weather station feeds across active launch sites.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] space-y-2">
+                            <div class="text-xs text-[#FF6F52] font-bold">RISHIKESH BASECAMP</div>
+                            <div class="text-3xl font-black text-white font-heading">24°C</div>
+                            <p class="text-xs text-gray-300">Clear Sky • River Flow: 450 CFS • Grade IV Rapids</p>
+                        </div>
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] space-y-2">
+                            <div class="text-xs text-[#F4A460] font-bold">SOLANG VALLEY OPS</div>
+                            <div class="text-3xl font-black text-white font-heading">14°C</div>
+                            <p class="text-xs text-gray-300">Alpine Breeze • Wind: 12 km/h • Paragliding Clear</p>
+                        </div>
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] space-y-2">
+                            <div class="text-xs text-emerald-400 font-bold">MOHAN CHATTI AERIAL</div>
+                            <div class="text-3xl font-black text-white font-heading">26°C</div>
+                            <p class="text-xs text-gray-300">Sunny • Canyon Wind: Optimal • 100% Jump Clearance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: PERMITS & SAFETY -->
+            <div id="tab-permits" class="tab-content space-y-6">
+                <div class="dashboard-card p-6">
+                    <h2 class="text-2xl font-extrabold text-white font-heading mb-2">Wilderness Safety Clearances & Medical Permits</h2>
+                    <p class="text-sm text-[#D3C5B4] mb-6">Your verified Petzl safety inspection logs and wilderness medical releases.</p>
+
+                    <div class="p-5 rounded-xl bg-[#1A0E0A] border border-emerald-500/30 flex items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-400">VERIFIED CLEARANCE</span>
+                            <h4 class="text-lg font-bold text-white">Level 4 Wilderness Medical Release</h4>
+                            <p class="text-xs text-[#D3C5B4]">Valid until Dec 2026 • Petzl Harness Fit Stamp #8842</p>
+                        </div>
+                        <a href="404.html" class="bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-lg">View Permit 📄</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: BASECAMP CONCIERGE -->
+            <div id="tab-concierge" class="tab-content space-y-6">
+                <div class="dashboard-card p-6">
+                    <h2 class="text-2xl font-extrabold text-white font-heading mb-2">24/7 Expedition Concierge & Support Hub</h2>
+                    <p class="text-sm text-[#D3C5B4] mb-6">Direct satellite dispatch communications with basecamp marshals.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] space-y-3">
+                            <h4 class="font-bold text-white">📞 Satellite Emergency Hotline</h4>
+                            <p class="text-xs text-[#D3C5B4]">Direct radio dispatch: +91 98765 43210 (24/7 Active)</p>
+                            <a href="404.html" class="inline-block bg-[#E35336] text-white text-xs font-bold px-4 py-2 rounded-lg">Call Concierge</a>
+                        </div>
+                        <div class="p-5 rounded-xl bg-[#1A0E0A] border border-[rgba(245,245,220,0.15)] space-y-3">
+                            <h4 class="font-bold text-white">💬 Live Expedition Chat</h4>
+                            <p class="text-xs text-[#D3C5B4]">Instant messaging with lead guides and equipment marshals.</p>
+                            <a href="404.html" class="inline-block bg-[#F4A460] text-black font-extrabold text-xs px-4 py-2 rounded-lg">Open Live Chat</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Interactive Dashboard Tab Switcher Script
+        const sidebarButtons = document.querySelectorAll('.sidebar-item[data-tab]');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const headerTabTitle = document.getElementById('headerTabTitle');
+        const headerTabSubtitle = document.getElementById('headerTabSubtitle');
+
+        const tabTitles = {
+            'tab-overview': { title: 'Adventurer Portal', subtitle: 'Real-time expedition telemetry & wilderness safety metrics' },
+            'tab-expeditions': { title: 'My Expeditions', subtitle: 'Manage active booking passes, gear lists, and GoPro vaults' },
+            'tab-quiz': { title: 'Quiz & Matcher', subtitle: 'Wilderness terrain quiz and expedition matching algorithm' },
+            'tab-weather': { title: 'Trail Weather', subtitle: 'Live hydro-telemetry and basecamp weather feeds' },
+            'tab-permits': { title: 'Permits & Safety', subtitle: 'Medical release permits and Petzl safety certifications' },
+            'tab-concierge': { title: 'Basecamp Concierge', subtitle: '24/7 direct satellite hotline and guide concierge' }
+        };
+
+        sidebarButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.getAttribute('data-tab');
+
+                // Update active state on sidebar buttons
+                sidebarButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Switch visible tab content
+                tabContents.forEach(content => {
+                    if (content.id === targetTab) {
+                        content.classList.add('active-tab');
+                    } else {
+                        content.classList.remove('active-tab');
+                    }
+                });
+
+                // Update header text
+                if (tabTitles[targetTab]) {
+                    headerTabTitle.textContent = tabTitles[targetTab].title;
+                    headerTabSubtitle.textContent = tabTitles[targetTab].subtitle;
+                }
+            });
+        });
+
+        // Mobile Sidebar Drawer Toggle & Backdrop Handler
+        const dashMobileToggle = document.getElementById('dashMobileToggle');
+        const dashSidebar = document.getElementById('dashSidebar');
+        const dashSidebarOverlay = document.getElementById('dashSidebarOverlay');
+        const dashToggleIcon = document.getElementById('dashToggleIcon');
+
+        const closeDashDrawer = () => {
+            dashSidebar?.classList.add('-translate-x-full');
+            dashSidebarOverlay?.classList.add('hidden');
+            if (dashToggleIcon) dashToggleIcon.className = 'fa-solid fa-bars';
+        };
+
+        const openDashDrawer = () => {
+            dashSidebar?.classList.remove('-translate-x-full');
+            dashSidebarOverlay?.classList.remove('hidden');
+            if (dashToggleIcon) dashToggleIcon.className = 'fa-solid fa-xmark';
+        };
+
+        if (dashMobileToggle && dashSidebar) {
+            dashMobileToggle.addEventListener('click', () => {
+                const isOpen = !dashSidebar.classList.contains('-translate-x-full');
+                if (isOpen) {
+                    closeDashDrawer();
+                } else {
+                    openDashDrawer();
+                }
+            });
+
+            dashSidebarOverlay?.addEventListener('click', closeDashDrawer);
+
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth < 768) {
+                        closeDashDrawer();
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

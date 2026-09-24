@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basecamp Login — Stackly Adventure Tourism</title>
+    <meta name="description" content="Log in to your Stackly Adventurer or Admin account to view active bookings, gear lists, and dispatch controls.">
+    <link rel="icon" type="image/webp" href="images/logoStackly.webp">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .role-option {
+            transition: all 0.2s ease;
+        }
+        .role-option.active-role {
+            border-color: var(--color-primary) !important;
+            background: rgba(227, 83, 54, 0.2) !important;
+            color: #FFF !important;
+        }
+        .password-toggle-icon {
+            user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .password-toggle-icon:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body style="background: var(--color-secondary); color: var(--color-text); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem;">
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <img src="images/logoStackly.webp" alt="Stackly Logo" class="preloader-logo" style="height: 52px; margin-bottom: 1.5rem;">
+            <div class="preloader-bar-wrap">
+                <div class="preloader-bar" id="plBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN FORM CONTAINER -->
+    <main style="width: 100%; max-width: 440px;">
+        <div style="margin-bottom: 1.2rem; text-align: left;">
+            <a href="index.html" style="color: var(--color-primary-light); font-size: 0.9rem; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;">
+                ← Back to Home
+            </a>
+        </div>
+
+        <div class="glass-card" style="padding: 2.5rem;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <a href="index.html">
+                    <img src="images/logoStackly.webp" alt="Stackly Logo" class="logo-img" style="height: 46px; margin: 0 auto 1rem;">
+                </a>
+                <h1 style="font-family: var(--font-heading); color: #FFF; font-size: 1.8rem;">Basecamp Portal</h1>
+                <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-top: 0.3rem;">Sign in to access your user or admin dashboard.</p>
+            </div>
+
+            <form id="loginForm" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                <!-- ROLE SELECTOR OPTION -->
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); margin-bottom: 0.5rem; letter-spacing: 0.5px;">SELECT LOGIN PORTAL *</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                        <label id="roleUserLabel" class="role-option active-role" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 0.5rem; border-radius: var(--radius-sm); border: 2px solid rgba(245,245,220,0.2); background: rgba(26,14,10,0.85); color: var(--color-text-muted); font-weight: 700; cursor: pointer; font-size: 0.85rem; text-align: center;">
+                            <input type="radio" name="loginRole" value="user" checked style="accent-color: var(--color-primary);">
+                            <span>👤 User</span>
+                        </label>
+                        <label id="roleAdminLabel" class="role-option" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 0.5rem; border-radius: var(--radius-sm); border: 2px solid rgba(245,245,220,0.2); background: rgba(26,14,10,0.85); color: var(--color-text-muted); font-weight: 700; cursor: pointer; font-size: 0.85rem; text-align: center;">
+                            <input type="radio" name="loginRole" value="admin" style="accent-color: var(--color-primary);">
+                            <span>🔑 Admin</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- EMAIL FIELD -->
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); margin-bottom: 0.4rem;">EMAIL ADDRESS *</label>
+                    <input type="email" id="loginEmail" name="email" placeholder="user@example.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Must be a valid email address (e.g. user@example.com)" style="width: 100%; padding: 0.8rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(245,245,220,0.2); background: rgba(26,14,10,0.85); color: #FFF; outline: none;">
+                </div>
+
+                <!-- STRONG PASSWORD FIELD WITH EYE MASK TOGGLE -->
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); margin-bottom: 0.4rem;">PASSWORD *</label>
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <input type="password" id="loginPassword" name="password" placeholder="••••••••••••" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}" title="Strong password required: at least 8 characters with 1 uppercase, 1 lowercase, 1 number, and 1 special character (@$!%*?&#)." style="width: 100%; padding: 0.8rem 2.8rem 0.8rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(245,245,220,0.2); background: rgba(26,14,10,0.85); color: #FFF; outline: none;">
+                        <button type="button" id="togglePasswordBtn" title="Toggle password visibility" class="password-toggle-icon" style="position: absolute; right: 0.8rem; background: none; border: none; color: var(--color-primary-light); font-size: 1.1rem; padding: 0.2rem; display: flex; align-items: center; justify-content: center; outline: none;">
+                            👁️
+                        </button>
+                    </div>
+                    <div style="font-size: 0.72rem; color: var(--color-text-muted); margin-top: 0.4rem; line-height: 1.4;">
+                        🔒 Required: Min 8 chars, 1 uppercase (A-Z), 1 lowercase (a-z), 1 digit (0-9), 1 special char (@$!%*?&#).
+                    </div>
+                </div>
+
+                <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="justify-content: center; margin-top: 0.5rem;">
+                    Log In To User Dashboard
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--color-text-muted);">
+                Don't have an account? <a href="signup.html" style="color: var(--color-primary-light); font-weight: 600; text-decoration: none;">Create One Here</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        const roleRadios = document.querySelectorAll('input[name="loginRole"]');
+        const roleUserLabel = document.getElementById('roleUserLabel');
+        const roleAdminLabel = document.getElementById('roleAdminLabel');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+        // Toggle Eye Mask for Password Field
+        togglePasswordBtn?.addEventListener('click', () => {
+            const isPassword = loginPassword.type === 'password';
+            loginPassword.type = isPassword ? 'text' : 'password';
+            togglePasswordBtn.textContent = isPassword ? '🙈' : '👁️';
+        });
+
+        // Role Selector Radio Handler
+        roleRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'admin') {
+                    roleAdminLabel.classList.add('active-role');
+                    roleUserLabel.classList.remove('active-role');
+                    loginEmail.placeholder = 'admin@stacklyadventures.com';
+                    loginSubmitBtn.textContent = 'Log In To Admin Command Hub';
+                } else {
+                    roleUserLabel.classList.add('active-role');
+                    roleAdminLabel.classList.remove('active-role');
+                    loginEmail.placeholder = 'adventurer@example.com';
+                    loginSubmitBtn.textContent = 'Log In To User Dashboard';
+                }
+            });
+        });
+
+        // Form Submit Handler with Strict Validation
+        document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            const selectedRole = document.querySelector('input[name="loginRole"]:checked')?.value || 'user';
+
+            // Validate Email Format
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address format (e.g. user@example.com).');
+                return;
+            }
+
+            // Validate Strong Password
+            const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+            if (!strongPasswordRegex.test(password)) {
+                alert('Strong Password Required!\n\nYour password must contain:\n• At least 8 characters\n• At least 1 uppercase letter (A-Z)\n• At least 1 lowercase letter (a-z)\n• At least 1 number (0-9)\n• At least 1 special character (@$!%*?&#)');
+                return;
+            }
+
+            if (selectedRole === 'admin') {
+                alert('🔑 Basecamp Admin authenticated! Opening Admin Command Hub...');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                alert('✨ Adventurer authenticated! Opening User Dashboard...');
+                window.location.href = 'user-dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
