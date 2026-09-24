@@ -86,7 +86,10 @@
 
                 <!-- STRONG PASSWORD FIELD WITH EYE MASK TOGGLE -->
                 <div>
-                    <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); margin-bottom: 0.4rem;">PASSWORD *</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                        <label style="font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted);">PASSWORD *</label>
+                        <a href="404.html" style="color: var(--color-primary-light); font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: color 0.2s ease;">Forgot password?</a>
+                    </div>
                     <div style="position: relative; display: flex; align-items: center;">
                         <input type="password" id="loginPassword" name="password" placeholder="••••••••••••" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}" title="Strong password required: at least 8 characters with 1 uppercase, 1 lowercase, 1 number, and 1 special character (@$!%*?&#)." style="width: 100%; padding: 0.8rem 2.8rem 0.8rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(245,245,220,0.2); background: rgba(26,14,10,0.85); color: #FFF; outline: none;">
                         <button type="button" id="togglePasswordBtn" title="Toggle password visibility" class="password-toggle-icon" style="position: absolute; right: 0.8rem; background: none; border: none; color: var(--color-primary-light); font-size: 1.1rem; padding: 0.2rem; display: flex; align-items: center; justify-content: center; outline: none;">
